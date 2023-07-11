@@ -1,0 +1,33 @@
+{
+  "name": "mettemett.se",
+  "version": "1.0.0",
+  "description": "website for meassuring things",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agerro/mettemett.se.git"
+  },
+  "keywords": [
+    "mett",
+    "code",
+    "meassuring",
+    "men",
+    "nodejs",
+    "node"
+  ],
+  "author": "Marcus Karlsson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agerro/mettemett.se/issues"
+  },
+  "homepage": "https://github.com/agerro/mettemett.se#readme",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.369.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "n": "^9.1.0"
+  }
+}
