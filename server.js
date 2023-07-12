@@ -3,7 +3,7 @@ console.log('Server-side code running');
 var express = require('express');
 var app = express();
 
-app.use(express.static('public'));
+app.use(express.static(__dirname+'/public'));
 
 const aws = require("@aws-sdk/client-dynamodb");
 
