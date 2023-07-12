@@ -2,7 +2,7 @@
   "name": "mettemett.se",
   "version": "1.0.0",
   "description": "website for meassuring things",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
