@@ -10,8 +10,6 @@ button_add.addEventListener('click', function (e) {
     unit: document.getElementById('meassure_unit').value
   };
 
-  console.log(JSON.stringify(params))
-
   fetch('/add_meassurement', {
     method: 'POST',
     mode: 'cors',

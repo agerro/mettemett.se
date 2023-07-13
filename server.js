@@ -2,6 +2,7 @@ console.log('Server-side code running');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const profanityCheck = require('profanity-check');
 
 var app = express();
 
@@ -16,6 +17,8 @@ const aws = require("@aws-sdk/client-dynamodb");
 
 const REGION = "eu-west-1"; //e.g. "us-east-1"";
 const dynamodbClient = new aws.DynamoDB({ region: REGION });
+
+const multiLanguageFilter = new profanityCheck.Filter({ languages: ["english", "french", "swedish"] })
 
 app.set('view engine', 'ejs');
 var port = process.env.PORT || 3000;
@@ -50,16 +53,25 @@ app.post('/add_meassurement', bodyParser.json(), (req, res) => {
         "unit": { "S": String(req.body.unit) }
     }
 
-    dynamodbClient.putItem({
-        TableName: 'mettemett',
-        Item: item,
-    }, (err, data) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(data);
-        }
-    });
+    let nameSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
+    let valueSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
+    let unitSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
+
+    if (!nameSafe && !valueSafe && !unitSafe) {
+        console.log("safe to proceed");
+        dynamodbClient.putItem({
+            TableName: 'mettemett',
+            Item: item,
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(data);
+            }
+        });
+    } else {
+        console.log("Profanity found, abort");
+    }
 });
 
 app.post('/query', (req, res) => {
