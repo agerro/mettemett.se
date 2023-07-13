@@ -1,8 +1,15 @@
 console.log('Server-side code running');
 
-var express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
+
 var app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
 const aws = require("@aws-sdk/client-dynamodb");
@@ -29,21 +36,24 @@ app.listen(port, function () {
     console.log("server is running on port" + port);
 });
 
-app.post('/add_meassurement', (req, res) => {
+app.post('/add_meassurement', bodyParser.json(), (req, res) => {
     console.log("redirected to function add_meassurement");
 
-    dynamodbClient.listTables({}, (err, data) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(data);
-        }
-    });
-});
+    var date = new Date();
+    var timestamp = date.getTime();
 
-app.post('/load_tables_old', (req, res) => {
-    console.log("redirected to function load_tables");
-    dynamodbClient.listTables({}, (err, data) => {
+    var item = {
+        "meassurement": { "S": "yes" },
+        "meassure_date": { "S": String(timestamp) },
+        "name": { "S": String(req.body.name) },
+        "value": { "S": String(req.body.value) },
+        "unit": { "S": String(req.body.unit) }
+    }
+
+    dynamodbClient.putItem({
+        TableName: 'mettemett',
+        Item: item,
+    }, (err, data) => {
         if (err) {
             console.log(err);
         } else {
