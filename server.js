@@ -53,11 +53,15 @@ app.post('/add_meassurement', bodyParser.json(), (req, res) => {
         "unit": { "S": String(req.body.unit) }
     }
 
-    let nameSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
-    let valueSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
-    let unitSafe = multiLanguageFilter.isProfane(String(String(req.body.name)));
+    let nameSafe = multiLanguageFilter.isProfane(String(req.body.name));
+    let valueSafe = multiLanguageFilter.isProfane(String(req.body.value));
+    let unitSafe = multiLanguageFilter.isProfane(String(req.body.unit));
 
-    if (!nameSafe && !valueSafe && !unitSafe) {
+    let namevalue = req.body.name;
+    let valuevalue = req.body.value;
+    let unitvalue = req.body.unit;
+
+    if (!nameSafe && !valueSafe && !unitSafe && namevalue != "" && valuevalue != "" && unitvalue != "") {
         console.log("safe to proceed");
         dynamodbClient.putItem({
             TableName: 'mettemett',
@@ -69,8 +73,10 @@ app.post('/add_meassurement', bodyParser.json(), (req, res) => {
                 console.log(data);
             }
         });
+        res.status(200).json({ message: "Added record" });
     } else {
-        console.log("Profanity found, abort");
+        console.log("NOK input, abort");
+        res.status(400).json({ message: "NOK input, which is not allowed" });
     }
 });
 

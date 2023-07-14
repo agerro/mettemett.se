@@ -11,7 +11,7 @@
 
 <body>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -33,16 +33,67 @@
     </nav>
 
     <div class="container">
-        <form>
-            <label for="meassure_name">Meassure name:</label>
-            <input type="text" id="meassure_name" name="meassure_name"><br><br>
-            <label for="meassure_value">Meassure value:</label>
-            <input type="text" id="meassure_value" name="meassure_value"><br><br>
-            <label for="meassure_unit">Meassure unit:</label>
-            <input type="text" id="meassure_unit" name="meassure_unit"><br><br>
-        </form>
-        <button id="add_meassurement">Add meassurement</button>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Add meassurement</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="meassure_name">Name:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="meassure_name" name="meassure_name">
+            </div>
+            <div class="col-sm-3">
+                <small id="name_help" class="form-text text-muted">Name your meassurement</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="meassure_value">Value:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="meassure_value" name="meassure_value">
+            </div>
+            <div class="col-sm-3">
+                <small id="value_help" class="form-text text-muted">How long was the thing you
+                    meassured?</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="meassure_unit">Unit:</label>
+            </div>
+            <div class="col-sm-3">
+                <select name="Unit" id="meassure_unit">
+                    <option value="cm">cm</option>
+                    <option value="mm">mm</option>
+                    <option value="m">m</option>
+                    <option value="km">km</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <small id="unit_help" class="form-text text-muted">What unit is the meassurement in?</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" id="add_meassurement">Add meassurement</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-danger" id="input_alert" style="display: none" role="alert">
+                    Error submitting meassurement!
+                </div>
+                <div class="alert alert-success" id="input_success" style="display: none" role="alert">
+                    Success!
+                </div>
+            </div>
+        </div>
     </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
